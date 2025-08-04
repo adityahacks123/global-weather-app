@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Weather App - AI Vision</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-cloud-sun"></i> Global Weather</h1>
+            <p>Get weather information from anywhere in the world with AI-powered image analysis</p>
+        </header>
+
+        <div class="search-section">
+            <div class="search-container">
+                <input type="text" id="cityInput" placeholder="Enter city name..." autocomplete="off">
+                <button id="searchBtn"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="search-suggestions" id="suggestions"></div>
+        </div>
+
+        <!-- AI Vision Section -->
+        <div class="ai-vision-section">
+            <h2><i class="fas fa-camera"></i> AI Weather Analysis</h2>
+            <p>Upload a photo to analyze weather conditions using AI</p>
+            
+            <div class="vision-container">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3>Upload Weather Photo</h3>
+                        <p>Drag & drop or click to upload</p>
+                        <input type="file" id="photoInput" accept="image/*" style="display: none;">
+                        <button class="upload-btn" onclick="document.getElementById('photoInput').click()">
+                            Choose Photo
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="image-preview" id="imagePreview" style="display: none;">
+                    <img id="previewImage" alt="Uploaded photo">
+                    <div class="image-controls">
+                        <button class="analyze-btn" id="analyzeBtn">
+                            <i class="fas fa-brain"></i> Analyze Weather
+                        </button>
+                        <button class="remove-btn" onclick="removeImage()">
+                            <i class="fas fa-times"></i> Remove
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ai-analysis-results" id="aiResults" style="display: none;">
+                <h3><i class="fas fa-robot"></i> AI Analysis Results</h3>
+                <div class="analysis-grid">
+                    <div class="analysis-item">
+                        <div class="analysis-icon">
+                            <i class="fas fa-cloud"></i>
+                        </div>
+                        <div class="analysis-content">
+                            <h4>Sky Condition</h4>
+                            <p id="skyCondition">Analyzing...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="analysis-item">
+                        <div class="analysis-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="analysis-content">
+                            <h4>Visibility</h4>
+                            <p id="visibility">Analyzing...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="analysis-item">
+                        <div class="analysis-icon">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                        <div class="analysis-content">
+                            <h4>Lighting</h4>
+                            <p id="lighting">Analyzing...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="analysis-item">
+                        <div class="analysis-icon">
+                            <i class="fas fa-thermometer-half"></i>
+                        </div>
+                        <div class="analysis-content">
+                            <h4>Temperature Estimate</h4>
+                            <p id="temperatureEstimate">Analyzing...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ai-insights">
+                    <h4><i class="fas fa-lightbulb"></i> AI Insights</h4>
+                    <p id="aiInsights">Analyzing weather patterns...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="weather-container" id="weatherContainer">
+            <div class="welcome-message">
+                <i class="fas fa-globe"></i>
+                <h2>Welcome to Global Weather</h2>
+                <p>Search for any city to get current weather information or upload a photo for AI analysis</p>
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Loading weather data...</p>
+        </div>
+
+        <div class="error-message" id="errorMessage">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p id="errorText">City not found. Please try again.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

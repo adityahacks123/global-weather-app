@@ -1,4 +1,4 @@
-// Weather App JavaScript with AI Vision
+// Weather App JavaScript with AI Vision and Theme Support
 class WeatherApp {
     constructor() {
         this.apiKey = '35a53c8cd572c107295d066e8bef02c4'; // Replace with your OpenWeatherMap API key
@@ -7,6 +7,7 @@ class WeatherApp {
         this.weatherData = [];
         this.suggestions = [];
         this.currentImage = null;
+        this.currentTheme = 'light';
         
         this.init();
     }
@@ -15,6 +16,54 @@ class WeatherApp {
         this.bindEvents();
         this.loadFromLocalStorage();
         this.initImageUpload();
+        this.initTheme();
+    }
+
+    initTheme() {
+        // Load saved theme or default to light
+        const savedTheme = localStorage.getItem('weatherAppTheme') || 'light';
+        this.setTheme(savedTheme);
+        
+        // Bind theme toggle button
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            this.toggleTheme();
+        });
+    }
+
+    setTheme(theme) {
+        this.currentTheme = theme;
+        document.body.className = `theme-${theme}`;
+        localStorage.setItem('weatherAppTheme', theme);
+        
+        // Update theme button icons
+        const lightIcon = document.querySelector('.light-icon');
+        const darkIcon = document.querySelector('.dark-icon');
+        
+        if (theme === 'dark') {
+            lightIcon.style.opacity = '0';
+            lightIcon.style.transform = 'scale(0)';
+            darkIcon.style.opacity = '1';
+            darkIcon.style.transform = 'scale(1)';
+        } else {
+            lightIcon.style.opacity = '1';
+            lightIcon.style.transform = 'scale(1)';
+            darkIcon.style.opacity = '0';
+            darkIcon.style.transform = 'scale(0)';
+        }
+    }
+
+    toggleTheme() {
+        const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+        this.setTheme(newTheme);
+        
+        // Add smooth transition effect
+        document.body.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+        
+        // Remove transition after animation completes
+        setTimeout(() => {
+            document.body.style.transition = '';
+        }, 400);
     }
 
     bindEvents() {

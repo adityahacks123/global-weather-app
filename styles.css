@@ -1,3 +1,79 @@
+/* CSS Variables for Themes */
+:root {
+    /* Light Theme Colors */
+    --light-bg-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --light-bg-secondary: rgba(255, 255, 255, 0.95);
+    --light-bg-tertiary: rgba(255, 255, 255, 0.1);
+    --light-text-primary: #333;
+    --light-text-secondary: #666;
+    --light-text-tertiary: #888;
+    --light-text-white: #fff;
+    --light-border: rgba(255, 255, 255, 0.2);
+    --light-shadow: rgba(0, 0, 0, 0.1);
+    --light-shadow-dark: rgba(0, 0, 0, 0.2);
+    --light-accent: #667eea;
+    --light-accent-secondary: #764ba2;
+    --light-hover: rgba(102, 126, 234, 0.1);
+    --light-hover-dark: rgba(102, 126, 234, 0.15);
+
+    /* Dark Theme Colors */
+    --dark-bg-primary: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    --dark-bg-secondary: rgba(30, 30, 50, 0.95);
+    --dark-bg-tertiary: rgba(255, 255, 255, 0.05);
+    --dark-text-primary: #ffffff;
+    --dark-text-secondary: #b0b0b0;
+    --dark-text-tertiary: #888;
+    --dark-text-white: #fff;
+    --dark-border: rgba(255, 255, 255, 0.1);
+    --dark-shadow: rgba(0, 0, 0, 0.3);
+    --dark-shadow-dark: rgba(0, 0, 0, 0.5);
+    --dark-accent: #4facfe;
+    --dark-accent-secondary: #00f2fe;
+    --dark-hover: rgba(79, 172, 254, 0.1);
+    --dark-hover-dark: rgba(79, 172, 254, 0.2);
+
+    /* Common Variables */
+    --transition-speed: 0.4s;
+    --border-radius: 15px;
+    --border-radius-large: 20px;
+    --border-radius-small: 10px;
+}
+
+/* Theme Classes */
+.theme-light {
+    --bg-primary: var(--light-bg-primary);
+    --bg-secondary: var(--light-bg-secondary);
+    --bg-tertiary: var(--light-bg-tertiary);
+    --text-primary: var(--light-text-primary);
+    --text-secondary: var(--light-text-secondary);
+    --text-tertiary: var(--light-text-tertiary);
+    --text-white: var(--light-text-white);
+    --border: var(--light-border);
+    --shadow: var(--light-shadow);
+    --shadow-dark: var(--light-shadow-dark);
+    --accent: var(--light-accent);
+    --accent-secondary: var(--light-accent-secondary);
+    --hover: var(--light-hover);
+    --hover-dark: var(--light-hover-dark);
+}
+
+.theme-dark {
+    --bg-primary: var(--dark-bg-primary);
+    --bg-secondary: var(--dark-bg-secondary);
+    --bg-tertiary: var(--dark-bg-tertiary);
+    --text-primary: var(--dark-text-primary);
+    --text-secondary: var(--dark-text-secondary);
+    --text-tertiary: var(--dark-text-tertiary);
+    --text-white: var(--dark-text-white);
+    --border: var(--dark-border);
+    --shadow: var(--dark-shadow);
+    --shadow-dark: var(--dark-shadow-dark);
+    --accent: var(--dark-accent);
+    --accent-secondary: var(--dark-accent-secondary);
+    --hover: var(--dark-hover);
+    --hover-dark: var(--dark-hover-dark);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,10 +82,11 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--bg-primary);
     min-height: 100vh;
-    color: #333;
+    color: var(--text-primary);
     overflow-x: hidden;
+    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Animated background */
@@ -26,6 +103,11 @@ body::before {
         radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
     animation: backgroundShift 20s ease-in-out infinite;
     z-index: -1;
+    transition: opacity var(--transition-speed) ease;
+}
+
+.theme-dark body::before {
+    opacity: 0.3;
 }
 
 @keyframes backgroundShift {
@@ -56,8 +138,90 @@ body::before {
 header {
     text-align: center;
     margin-bottom: 40px;
-    color: white;
+    color: var(--text-white);
     animation: slideInDown 1.2s ease-out;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.title-section {
+    flex: 1;
+    text-align: left;
+}
+
+.theme-switcher {
+    position: relative;
+}
+
+.theme-btn {
+    background: var(--bg-secondary);
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: var(--accent);
+    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--accent), var(--accent-secondary));
+    transition: left var(--transition-speed) ease;
+}
+
+.theme-btn:hover::before {
+    left: 0;
+}
+
+.theme-btn:hover {
+    transform: scale(1.1) rotate(180deg);
+    box-shadow: 0 5px 15px var(--shadow-dark);
+}
+
+.theme-btn i {
+    position: relative;
+    z-index: 1;
+    transition: all var(--transition-speed) ease;
+}
+
+.light-icon {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.dark-icon {
+    opacity: 0;
+    transform: scale(0);
+    position: absolute;
+}
+
+.theme-dark .light-icon {
+    opacity: 0;
+    transform: scale(0);
+}
+
+.theme-dark .dark-icon {
+    opacity: 1;
+    transform: scale(1);
 }
 
 @keyframes slideInDown {
@@ -75,7 +239,7 @@ header h1 {
     font-size: 3.5rem;
     margin-bottom: 10px;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    background: linear-gradient(45deg, #fff, #f0f0f0);
+    background: linear-gradient(45deg, var(--text-white), #f0f0f0);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -119,23 +283,23 @@ header p {
     display: flex;
     max-width: 500px;
     margin: 0 auto;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--bg-secondary);
     border-radius: 50px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 30px var(--shadow);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--border);
+    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .search-container:hover {
     transform: translateY(-2px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    box-shadow: 0 20px 40px var(--shadow-dark);
 }
 
 .search-container:focus-within {
     transform: scale(1.02);
-    box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+    box-shadow: 0 25px 50px var(--shadow-dark);
 }
 
 #cityInput {
@@ -145,26 +309,27 @@ header p {
     outline: none;
     font-size: 1.1rem;
     background: transparent;
+    color: var(--text-primary);
     transition: all 0.3s ease;
 }
 
 #cityInput::placeholder {
-    color: #999;
+    color: var(--text-tertiary);
     transition: color 0.3s ease;
 }
 
 #cityInput:focus::placeholder {
-    color: #667eea;
+    color: var(--accent);
 }
 
 #searchBtn {
     padding: 18px 25px;
-    background: linear-gradient(45deg, #667eea, #764ba2);
+    background: linear-gradient(45deg, var(--accent), var(--accent-secondary));
     border: none;
-    color: white;
+    color: var(--text-white);
     cursor: pointer;
     font-size: 1.1rem;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
 }
@@ -176,8 +341,8 @@ header p {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, #764ba2, #667eea);
-    transition: left 0.4s ease;
+    background: linear-gradient(45deg, var(--accent-secondary), var(--accent));
+    transition: left var(--transition-speed) ease;
 }
 
 #searchBtn:hover::before {
@@ -186,7 +351,7 @@ header p {
 
 #searchBtn:hover {
     transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 5px 15px var(--shadow-dark);
 }
 
 #searchBtn i {
@@ -201,15 +366,15 @@ header p {
     transform: translateX(-50%);
     width: 500px;
     max-width: 90vw;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--bg-secondary);
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 30px var(--shadow);
     z-index: 1000;
     display: none;
     max-height: 300px;
     overflow-y: auto;
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--border);
     animation: slideInDown 0.3s ease-out;
 }
 
@@ -227,10 +392,11 @@ header p {
 .suggestion-item {
     padding: 15px 20px;
     cursor: pointer;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--border);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    color: var(--text-primary);
 }
 
 .suggestion-item::before {
@@ -240,7 +406,7 @@ header p {
     top: 0;
     width: 0;
     height: 100%;
-    background: linear-gradient(45deg, #667eea, #764ba2);
+    background: linear-gradient(45deg, var(--accent), var(--accent-secondary));
     transition: width 0.3s ease;
     z-index: -1;
 }
@@ -250,9 +416,9 @@ header p {
 }
 
 .suggestion-item:hover {
-    background: rgba(102, 126, 234, 0.1);
+    background: var(--hover);
     transform: translateX(5px);
-    color: #667eea;
+    color: var(--accent);
 }
 
 .suggestion-item:last-child {
@@ -261,12 +427,12 @@ header p {
 
 /* AI Vision Section Styles */
 .ai-vision-section {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
+    background: var(--bg-tertiary);
+    border-radius: var(--border-radius-large);
     padding: 30px;
     margin-bottom: 40px;
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--border);
     animation: slideInUp 1s ease-out 0.6s both;
     position: relative;
     overflow: hidden;
@@ -290,7 +456,7 @@ header p {
 }
 
 .ai-vision-section h2 {
-    color: white;
+    color: var(--text-white);
     text-align: center;
     margin-bottom: 10px;
     font-size: 2rem;
@@ -299,7 +465,7 @@ header p {
 }
 
 .ai-vision-section > p {
-    color: white;
+    color: var(--text-white);
     text-align: center;
     margin-bottom: 30px;
     opacity: 0.9;
@@ -318,12 +484,12 @@ header p {
 
 .upload-area {
     flex: 1;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 15px;
+    background: var(--bg-secondary);
+    border-radius: var(--border-radius);
     padding: 40px;
     text-align: center;
-    border: 2px dashed #667eea;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px dashed var(--accent);
+    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     min-height: 200px;
     display: flex;
@@ -340,7 +506,7 @@ header p {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+    background: linear-gradient(45deg, transparent, var(--hover), transparent);
     transition: left 0.6s ease;
 }
 
@@ -349,15 +515,15 @@ header p {
 }
 
 .upload-area:hover {
-    border-color: #764ba2;
-    background: rgba(255, 255, 255, 0.98);
+    border-color: var(--accent-secondary);
+    background: var(--bg-secondary);
     transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    box-shadow: 0 15px 35px var(--shadow-dark);
 }
 
 .upload-area.dragover {
-    border-color: #764ba2;
-    background: rgba(102, 126, 234, 0.1);
+    border-color: var(--accent-secondary);
+    background: var(--hover);
     transform: scale(1.05);
     animation: pulse 0.6s ease-in-out;
 }
@@ -369,7 +535,7 @@ header p {
 
 .upload-content i {
     font-size: 3rem;
-    color: #667eea;
+    color: var(--accent);
     margin-bottom: 15px;
     animation: float 3s ease-in-out infinite;
 }
@@ -382,23 +548,23 @@ header p {
 .upload-content h3 {
     font-size: 1.5rem;
     margin-bottom: 10px;
-    color: #333;
+    color: var(--text-primary);
 }
 
 .upload-content p {
-    color: #666;
+    color: var(--text-secondary);
     margin-bottom: 20px;
 }
 
 .upload-btn {
-    background: linear-gradient(45deg, #667eea, #764ba2);
-    color: white;
+    background: linear-gradient(45deg, var(--accent), var(--accent-secondary));
+    color: var(--text-white);
     border: none;
     padding: 12px 25px;
     border-radius: 25px;
     cursor: pointer;
     font-size: 1rem;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
 }
@@ -410,8 +576,8 @@ header p {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, #764ba2, #667eea);
-    transition: left 0.4s ease;
+    background: linear-gradient(45deg, var(--accent-secondary), var(--accent));
+    transition: left var(--transition-speed) ease;
 }
 
 .upload-btn:hover::before {
@@ -420,13 +586,13 @@ header p {
 
 .upload-btn:hover {
     transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 5px 15px var(--shadow-dark);
 }
 
 .image-preview {
     flex: 1;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 15px;
+    background: var(--bg-secondary);
+    border-radius: var(--border-radius);
     padding: 20px;
     text-align: center;
     animation: slideInRight 0.5s ease-out;
@@ -447,9 +613,9 @@ header p {
 .image-preview img {
     max-width: 100%;
     max-height: 200px;
-    border-radius: 10px;
+    border-radius: var(--border-radius-small);
     margin-bottom: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px var(--shadow);
     transition: transform 0.3s ease;
 }
 
@@ -469,7 +635,7 @@ header p {
     border-radius: 20px;
     cursor: pointer;
     font-size: 0.9rem;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
 }
@@ -481,7 +647,7 @@ header p {
     left: -100%;
     width: 100%;
     height: 100%;
-    transition: left 0.4s ease;
+    transition: left var(--transition-speed) ease;
 }
 
 .analyze-btn::before {
@@ -498,7 +664,7 @@ header p {
 
 .analyze-btn {
     background: linear-gradient(45deg, #28a745, #20c997);
-    color: white;
+    color: var(--text-white);
 }
 
 .analyze-btn:hover {
@@ -508,7 +674,7 @@ header p {
 
 .remove-btn {
     background: linear-gradient(45deg, #dc3545, #fd7e14);
-    color: white;
+    color: var(--text-white);
 }
 
 .remove-btn:hover {
@@ -517,8 +683,8 @@ header p {
 }
 
 .ai-analysis-results {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 15px;
+    background: var(--bg-secondary);
+    border-radius: var(--border-radius);
     padding: 25px;
     margin-top: 20px;
     animation: slideInUp 0.6s ease-out;
@@ -526,7 +692,7 @@ header p {
 }
 
 .ai-analysis-results h3 {
-    color: #333;
+    color: var(--text-primary);
     text-align: center;
     margin-bottom: 20px;
     font-size: 1.5rem;
@@ -544,22 +710,22 @@ header p {
     align-items: center;
     gap: 15px;
     padding: 15px;
-    background: rgba(102, 126, 234, 0.1);
-    border-radius: 10px;
-    border-left: 4px solid #667eea;
+    background: var(--hover);
+    border-radius: var(--border-radius-small);
+    border-left: 4px solid var(--accent);
     transition: all 0.3s ease;
     animation: fadeInUp 0.6s ease-out;
 }
 
 .analysis-item:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
-    background: rgba(102, 126, 234, 0.15);
+    box-shadow: 0 5px 15px var(--shadow-dark);
+    background: var(--hover-dark);
 }
 
 .analysis-icon {
     font-size: 1.5rem;
-    color: #667eea;
+    color: var(--accent);
     width: 40px;
     text-align: center;
     animation: bounce 2s infinite;
@@ -574,19 +740,19 @@ header p {
 .analysis-content h4 {
     font-size: 1rem;
     margin-bottom: 5px;
-    color: #333;
+    color: var(--text-primary);
 }
 
 .analysis-content p {
-    color: #666;
+    color: var(--text-secondary);
     font-weight: 500;
 }
 
 .ai-insights {
-    background: linear-gradient(45deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-    border-radius: 10px;
+    background: linear-gradient(45deg, var(--hover), var(--hover-dark));
+    border-radius: var(--border-radius-small);
     padding: 20px;
-    border-left: 4px solid #764ba2;
+    border-left: 4px solid var(--accent-secondary);
     animation: slideInLeft 0.6s ease-out;
 }
 
@@ -602,13 +768,13 @@ header p {
 }
 
 .ai-insights h4 {
-    color: #333;
+    color: var(--text-primary);
     margin-bottom: 10px;
     font-size: 1.1rem;
 }
 
 .ai-insights p {
-    color: #666;
+    color: var(--text-secondary);
     line-height: 1.6;
 }
 
@@ -621,12 +787,12 @@ header p {
 }
 
 .weather-card {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 20px;
+    background: var(--bg-secondary);
+    border-radius: var(--border-radius-large);
     padding: 30px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    box-shadow: 0 15px 35px var(--shadow);
     backdrop-filter: blur(10px);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
     animation: slideInUp 0.8s ease-out;
@@ -639,13 +805,13 @@ header p {
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(45deg, #667eea, #764ba2);
+    background: linear-gradient(45deg, var(--accent), var(--accent-secondary));
     animation: shimmer 2s infinite;
 }
 
 .weather-card:hover {
     transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+    box-shadow: 0 25px 50px var(--shadow-dark);
 }
 
 .weather-card::after {
@@ -672,20 +838,20 @@ header p {
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 5px;
-    color: #333;
+    color: var(--text-primary);
     animation: fadeInUp 0.6s ease-out;
 }
 
 .country {
     font-size: 1.1rem;
-    color: #666;
+    color: var(--text-secondary);
     margin-bottom: 10px;
     animation: fadeInUp 0.6s ease-out 0.1s both;
 }
 
 .date-time {
     font-size: 0.9rem;
-    color: #888;
+    color: var(--text-tertiary);
     animation: fadeInUp 0.6s ease-out 0.2s both;
 }
 
@@ -700,7 +866,7 @@ header p {
 .temperature {
     font-size: 3.5rem;
     font-weight: bold;
-    color: #333;
+    color: var(--text-primary);
     animation: scaleIn 0.8s ease-out 0.4s both;
 }
 
@@ -717,7 +883,7 @@ header p {
 
 .weather-icon {
     font-size: 4rem;
-    color: #667eea;
+    color: var(--accent);
     animation: rotateIn 1s ease-out 0.5s both;
 }
 
@@ -735,7 +901,7 @@ header p {
 .weather-description {
     text-align: center;
     font-size: 1.2rem;
-    color: #666;
+    color: var(--text-secondary);
     margin-bottom: 25px;
     text-transform: capitalize;
     animation: fadeInUp 0.6s ease-out 0.6s both;
@@ -753,8 +919,8 @@ header p {
     align-items: center;
     gap: 10px;
     padding: 15px;
-    background: rgba(102, 126, 234, 0.1);
-    border-radius: 10px;
+    background: var(--hover);
+    border-radius: var(--border-radius-small);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
@@ -767,7 +933,7 @@ header p {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+    background: linear-gradient(45deg, transparent, var(--hover), transparent);
     transition: left 0.6s ease;
 }
 
@@ -777,13 +943,13 @@ header p {
 
 .detail-item:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
-    background: rgba(102, 126, 234, 0.15);
+    box-shadow: 0 5px 15px var(--shadow-dark);
+    background: var(--hover-dark);
 }
 
 .detail-icon {
     font-size: 1.2rem;
-    color: #667eea;
+    color: var(--accent);
     width: 20px;
     animation: pulse 2s infinite;
 }
@@ -794,19 +960,19 @@ header p {
 
 .detail-label {
     font-size: 0.9rem;
-    color: #666;
+    color: var(--text-secondary);
     margin-bottom: 2px;
 }
 
 .detail-value {
     font-size: 1.1rem;
     font-weight: bold;
-    color: #333;
+    color: var(--text-primary);
 }
 
 .welcome-message {
     text-align: center;
-    color: white;
+    color: var(--text-white);
     padding: 60px 20px;
     animation: fadeInUp 1s ease-out;
 }
@@ -831,7 +997,7 @@ header p {
 .loading {
     display: none;
     text-align: center;
-    color: white;
+    color: var(--text-white);
     padding: 40px;
     animation: fadeIn 0.5s ease-out;
 }
@@ -840,7 +1006,7 @@ header p {
     width: 50px;
     height: 50px;
     border: 4px solid rgba(255,255,255,0.3);
-    border-top: 4px solid white;
+    border-top: 4px solid var(--text-white);
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin: 0 auto 20px;
@@ -854,10 +1020,10 @@ header p {
 .error-message {
     display: none;
     text-align: center;
-    color: white;
+    color: var(--text-white);
     padding: 40px;
     background: rgba(220, 53, 69, 0.2);
-    border-radius: 15px;
+    border-radius: var(--border-radius);
     margin: 20px 0;
     animation: shake 0.5s ease-in-out;
 }
@@ -881,6 +1047,15 @@ header p {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .title-section {
+        text-align: center;
+    }
+    
     header h1 {
         font-size: 2.5rem;
     }
@@ -958,7 +1133,7 @@ header p {
     width: 60px;
     height: 60px;
     border: 4px solid rgba(255, 255, 255, 0.3);
-    border-top: 4px solid white;
+    border-top: 4px solid var(--text-white);
     border-radius: 50%;
     animation: spin 1s linear infinite;
 } 

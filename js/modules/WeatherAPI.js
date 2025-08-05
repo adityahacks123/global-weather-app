@@ -13,14 +13,19 @@ class WeatherAPI {
             );
             
             if (!response.ok) {
-                throw new Error('Failed to get coordinates');
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
 
             const data = await response.json();
-            return data.length > 0 ? { lat: data[0].lat, lon: data[0].lon } : null;
+            
+            if (data.length === 0) {
+                throw new Error('City not found');
+            }
+            
+            return { lat: data[0].lat, lon: data[0].lon };
         } catch (error) {
             console.error('Error getting coordinates:', error);
-            return null;
+            throw error;
         }
     }
 

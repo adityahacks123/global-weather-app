@@ -88,7 +88,12 @@ class UI {
         if (!cityName) return;
 
         this.hideSuggestions();
-        await app.searchWeather(cityName);
+        try {
+            await app.searchWeather(cityName);
+        } catch (error) {
+            console.error('Search error:', error);
+            this.showError('Failed to search weather. Please try again.');
+        }
     }
 
     async searchWithCoordinates(lat, lon, cityName) {

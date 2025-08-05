@@ -51,12 +51,6 @@ class WeatherApp {
 
         try {
             const coordinates = await this.weatherAPI.getCityCoordinates(cityName);
-            
-            if (!coordinates) {
-                this.ui.showError('City not found. Please try a different city name.');
-                return;
-            }
-
             const weatherData = await this.weatherAPI.getWeatherData(coordinates.lat, coordinates.lon);
             const processedData = this.weatherAPI.processWeatherData(weatherData, cityName);
             
@@ -68,7 +62,18 @@ class WeatherApp {
             
         } catch (error) {
             console.error('Error searching weather:', error);
-            this.ui.showError('Failed to fetch weather data. Please try again.');
+            
+            let errorMessage = 'Failed to fetch weather data. Please try again.';
+            
+            if (error.message.includes('City not found')) {
+                errorMessage = 'City not found. Please check the spelling and try again.';
+            } else if (error.message.includes('401')) {
+                errorMessage = 'API key error. Please check your OpenWeatherMap API key.';
+            } else if (error.message.includes('429')) {
+                errorMessage = 'Too many requests. Please wait a moment and try again.';
+            }
+            
+            this.ui.showError(errorMessage);
         } finally {
             this.ui.hideLoading();
         }

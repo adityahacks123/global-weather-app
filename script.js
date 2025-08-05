@@ -1,4 +1,4 @@
-// Weather App JavaScript with AI Vision and Theme Support
+// Weather App JavaScript with AI Vision, Theme Support, and Location Features
 class WeatherApp {
     constructor() {
         this.apiKey = '35a53c8cd572c107295d066e8bef02c4'; // Replace with your OpenWeatherMap API key
@@ -8,6 +8,7 @@ class WeatherApp {
         this.suggestions = [];
         this.currentImage = null;
         this.currentTheme = 'light';
+        this.isLocationLoading = false;
         
         this.init();
     }
@@ -17,6 +18,148 @@ class WeatherApp {
         this.loadFromLocalStorage();
         this.initImageUpload();
         this.initTheme();
+        this.initLocationFeatures();
+    }
+
+    initLocationFeatures() {
+        const locationBtn = document.getElementById('locationBtn');
+        locationBtn.addEventListener('click', () => {
+            this.getUserLocation();
+        });
+    }
+
+    getUserLocation() {
+        if (this.isLocationLoading) {
+            return; // Prevent multiple requests
+        }
+
+        this.isLocationLoading = true;
+        this.updateLocationButton(true);
+
+        if (!navigator.geolocation) {
+            this.showError('Geolocation is not supported by your browser.');
+            this.updateLocationButton(false);
+            this.isLocationLoading = false;
+            return;
+        }
+
+        const options = {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 300000 // 5 minutes
+        };
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                this.handleLocationSuccess(position);
+            },
+            (error) => {
+                this.handleLocationError(error);
+            },
+            options
+        );
+    }
+
+    handleLocationSuccess(position) {
+        const { latitude, longitude } = position.coords;
+        
+        // First get city name from coordinates
+        this.getCityFromCoordinates(latitude, longitude)
+            .then(cityName => {
+                if (cityName) {
+                    // Get weather for the detected location
+                    this.getWeatherData(latitude, longitude, cityName);
+                    this.showSuccess(`Weather loaded for ${cityName}`);
+                } else {
+                    this.showError('Could not determine your city name.');
+                }
+            })
+            .catch(error => {
+                console.error('Error getting city name:', error);
+                this.showError('Could not determine your city name.');
+            })
+            .finally(() => {
+                this.updateLocationButton(false);
+                this.isLocationLoading = false;
+            });
+    }
+
+    handleLocationError(error) {
+        let errorMessage = 'Unable to get your location.';
+        
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                errorMessage = 'Location access denied. Please allow location access in your browser settings.';
+                break;
+            case error.POSITION_UNAVAILABLE:
+                errorMessage = 'Location information is unavailable.';
+                break;
+            case error.TIMEOUT:
+                errorMessage = 'Location request timed out. Please try again.';
+                break;
+            case error.UNKNOWN_ERROR:
+                errorMessage = 'An unknown error occurred while getting your location.';
+                break;
+        }
+
+        this.showError(errorMessage);
+        this.updateLocationButton(false);
+        this.isLocationLoading = false;
+    }
+
+    async getCityFromCoordinates(lat, lon) {
+        try {
+            const response = await fetch(
+                `${this.geocodingUrl}/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${this.apiKey}`
+            );
+            
+            if (!response.ok) {
+                throw new Error('Failed to get city name');
+            }
+
+            const data = await response.json();
+            if (data.length > 0) {
+                const city = data[0];
+                return `${city.name}, ${city.country}`;
+            }
+            return null;
+        } catch (error) {
+            console.error('Error getting city name:', error);
+            return null;
+        }
+    }
+
+    updateLocationButton(isLoading) {
+        const locationBtn = document.getElementById('locationBtn');
+        const icon = locationBtn.querySelector('i');
+        const text = locationBtn.querySelector('.btn-text');
+
+        if (isLoading) {
+            icon.className = 'fas fa-spinner fa-spin';
+            text.textContent = 'Getting Location...';
+            locationBtn.disabled = true;
+        } else {
+            icon.className = 'fas fa-location-arrow';
+            text.textContent = 'My Location';
+            locationBtn.disabled = false;
+        }
+    }
+
+    showSuccess(message) {
+        // Create a temporary success message
+        const successDiv = document.createElement('div');
+        successDiv.className = 'success-message';
+        successDiv.innerHTML = `
+            <i class="fas fa-check-circle"></i>
+            <p>${message}</p>
+        `;
+        
+        document.body.appendChild(successDiv);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            successDiv.remove();
+        }, 3000);
     }
 
     initTheme() {
@@ -476,7 +619,7 @@ class WeatherApp {
                 <div class="welcome-message">
                     <i class="fas fa-globe"></i>
                     <h2>Welcome to Global Weather</h2>
-                    <p>Search for any city to get current weather information or upload a photo for AI analysis</p>
+                    <p>Search for any city to get current weather information, use your location, or upload a photo for AI analysis</p>
                 </div>
             `;
             return;

@@ -155,6 +155,142 @@ header {
     text-align: left;
 }
 
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.location-btn {
+    background: var(--bg-secondary);
+    border: 2px solid var(--border);
+    border-radius: 25px;
+    padding: 12px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.location-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--accent), var(--accent-secondary));
+    transition: left var(--transition-speed) ease;
+}
+
+.location-btn:hover::before {
+    left: 0;
+}
+
+.location-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px var(--shadow-dark);
+    border-color: var(--accent);
+}
+
+.location-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.location-btn i {
+    position: relative;
+    z-index: 1;
+    transition: all var(--transition-speed) ease;
+}
+
+.location-btn .btn-text {
+    position: relative;
+    z-index: 1;
+    color: var(--text-primary);
+    transition: color var(--transition-speed) ease;
+}
+
+.location-btn:hover .btn-text {
+    color: var(--text-white);
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.location-btn {
+    background: var(--bg-secondary);
+    border: 2px solid var(--border);
+    border-radius: 25px;
+    padding: 12px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.location-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--accent), var(--accent-secondary));
+    transition: left var(--transition-speed) ease;
+}
+
+.location-btn:hover::before {
+    left: 0;
+}
+
+.location-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px var(--shadow-dark);
+    border-color: var(--accent);
+}
+
+.location-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.location-btn i {
+    position: relative;
+    z-index: 1;
+    transition: all var(--transition-speed) ease;
+}
+
+.location-btn .btn-text {
+    position: relative;
+    z-index: 1;
+    color: var(--text-primary);
+    transition: color var(--transition-speed) ease;
+}
+
+.location-btn:hover .btn-text {
+    color: var(--text-white);
+}
+
 .theme-switcher {
     position: relative;
 }
@@ -260,6 +396,82 @@ header p {
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 0.9; }
+}
+
+/* Success Message Styles */
+.success-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(45deg, #28a745, #20c997);
+    color: white;
+    padding: 15px 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: slideInRight 0.5s ease-out;
+    backdrop-filter: blur(10px);
+}
+
+.success-message i {
+    font-size: 1.2rem;
+}
+
+.success-message p {
+    margin: 0;
+    font-weight: 500;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Success Message Styles */
+.success-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(45deg, #28a745, #20c997);
+    color: white;
+    padding: 15px 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: slideInRight 0.5s ease-out;
+    backdrop-filter: blur(10px);
+}
+
+.success-message i {
+    font-size: 1.2rem;
+}
+
+.success-message p {
+    margin: 0;
+    font-weight: 500;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .search-section {
@@ -1054,6 +1266,16 @@ header p {
     
     .title-section {
         text-align: center;
+    }
+    
+    .header-controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .location-btn {
+        width: 100%;
+        justify-content: center;
     }
     
     header h1 {

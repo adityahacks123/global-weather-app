@@ -1,0 +1,141 @@
+/* Base CSS - Common styles and variables */
+:root {
+    /* Light Theme Colors */
+    --light-bg-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --light-bg-secondary: rgba(255, 255, 255, 0.95);
+    --light-bg-tertiary: rgba(255, 255, 255, 0.1);
+    --light-text-primary: #333;
+    --light-text-secondary: #666;
+    --light-text-tertiary: #888;
+    --light-text-white: #fff;
+    --light-border: rgba(255, 255, 255, 0.2);
+    --light-shadow: rgba(0, 0, 0, 0.1);
+    --light-shadow-dark: rgba(0, 0, 0, 0.2);
+    --light-accent: #667eea;
+    --light-accent-secondary: #764ba2;
+    --light-hover: rgba(102, 126, 234, 0.1);
+    --light-hover-dark: rgba(102, 126, 234, 0.15);
+
+    /* Dark Theme Colors */
+    --dark-bg-primary: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    --dark-bg-secondary: rgba(30, 30, 50, 0.95);
+    --dark-bg-tertiary: rgba(255, 255, 255, 0.05);
+    --dark-text-primary: #ffffff;
+    --dark-text-secondary: #b0b0b0;
+    --dark-text-tertiary: #888;
+    --dark-text-white: #fff;
+    --dark-border: rgba(255, 255, 255, 0.1);
+    --dark-shadow: rgba(0, 0, 0, 0.3);
+    --dark-shadow-dark: rgba(0, 0, 0, 0.5);
+    --dark-accent: #4facfe;
+    --dark-accent-secondary: #00f2fe;
+    --dark-hover: rgba(79, 172, 254, 0.1);
+    --dark-hover-dark: rgba(79, 172, 254, 0.2);
+
+    /* Common Variables */
+    --transition-speed: 0.4s;
+    --border-radius: 15px;
+    --border-radius-large: 20px;
+    --border-radius-small: 10px;
+}
+
+/* Theme Classes */
+.theme-light {
+    --bg-primary: var(--light-bg-primary);
+    --bg-secondary: var(--light-bg-secondary);
+    --bg-tertiary: var(--light-bg-tertiary);
+    --text-primary: var(--light-text-primary);
+    --text-secondary: var(--light-text-secondary);
+    --text-tertiary: var(--light-text-tertiary);
+    --text-white: var(--light-text-white);
+    --border: var(--light-border);
+    --shadow: var(--light-shadow);
+    --shadow-dark: var(--light-shadow-dark);
+    --accent: var(--light-accent);
+    --accent-secondary: var(--light-accent-secondary);
+    --hover: var(--light-hover);
+    --hover-dark: var(--light-hover-dark);
+}
+
+.theme-dark {
+    --bg-primary: var(--dark-bg-primary);
+    --bg-secondary: var(--dark-bg-secondary);
+    --bg-tertiary: var(--dark-bg-tertiary);
+    --text-primary: var(--dark-text-primary);
+    --text-secondary: var(--dark-text-secondary);
+    --text-tertiary: var(--dark-text-tertiary);
+    --text-white: var(--dark-text-white);
+    --border: var(--dark-border);
+    --shadow: var(--dark-shadow);
+    --shadow-dark: var(--dark-shadow-dark);
+    --accent: var(--dark-accent);
+    --accent-secondary: var(--dark-accent-secondary);
+    --hover: var(--dark-hover);
+    --hover-dark: var(--dark-hover-dark);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg-primary);
+    min-height: 100vh;
+    color: var(--text-primary);
+    overflow-x: hidden;
+    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Animated background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+    animation: backgroundShift 20s ease-in-out infinite;
+    z-index: -1;
+    transition: opacity var(--transition-speed) ease;
+}
+
+.theme-dark body::before {
+    opacity: 0.3;
+}
+
+@keyframes backgroundShift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(-10px, -10px) scale(1.1); }
+    50% { transform: translate(10px, -5px) scale(0.9); }
+    75% { transform: translate(-5px, 10px) scale(1.05); }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 0.9; }
+} 

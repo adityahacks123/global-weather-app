@@ -7,6 +7,25 @@ A modern, responsive web application that allows you to fetch weather conditions
 ![HTML5](https://img.shields.io/badge/HTML5-Valid-orange)
 ![CSS3](https://img.shields.io/badge/CSS3-Animated-blue)
 
+## 📁 Project Structure
+
+```
+global-weather-app/
+├── index.html                    # Main HTML file
+├── script.js                     # Main JavaScript file
+├── styles/
+│   ├── base.css                 # Base styles, variables, themes
+│   ├── components.css           # Reusable UI components
+│   └── main.css                # Weather app specific styles
+├── js/
+│   ├── modules/
+│   │   ├── WeatherAPI.js       # Weather API operations
+│   │   ├── UI.js              # DOM manipulation & UI functions
+│   │   └── Storage.js         # Local storage operations
+│   └── script.js              # Main app logic
+└── README.md                   # Project documentation
+```
+
 ## ✨ Features
 
 ### 🌍 **Global Weather Data**
@@ -45,6 +64,25 @@ A modern, responsive web application that allows you to fetch weather conditions
 ![Weather App Interface](screenshots/weather-app.png)
 ![AI Analysis](screenshots/ai-analysis.png)
 
+## 📁 Project Structure
+
+```
+global-weather-app/
+├── index.html                    # Main HTML file
+├── script.js                     # Main JavaScript file
+├── styles/
+│   ├── base.css                 # Base styles, variables, themes
+│   ├── components.css           # Reusable UI components
+│   └── main.css                # Weather app specific styles
+├── js/
+│   ├── modules/
+│   │   ├── WeatherAPI.js       # Weather API operations
+│   │   ├── UI.js              # DOM manipulation & UI functions
+│   │   └── Storage.js         # Local storage operations
+│   └── script.js              # Main app logic
+└── README.md                   # Project documentation
+```
+
 ## 🛠️ Technologies Used
 
 - **Frontend**: HTML5, CSS3, JavaScript (ES6+)
@@ -52,6 +90,7 @@ A modern, responsive web application that allows you to fetch weather conditions
 - **Icons**: Font Awesome
 - **Animations**: CSS3 Animations & Transitions
 - **AI Features**: Computer Vision Simulation
+- **Architecture**: Modular JavaScript Structure
 
 ## 📋 Weather Information Displayed
 

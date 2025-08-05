@@ -75,7 +75,12 @@ class UI {
         this.elements.cityInput.value = cityName;
         this.hideSuggestions();
         // Trigger search with coordinates
-        this.searchWithCoordinates(lat, lon, cityName);
+        if (window.weatherAPI) {
+            this.searchWithCoordinates(lat, lon, cityName);
+        } else {
+            // Fallback to regular search
+            this.handleSearch(window.weatherAPI, window.app);
+        }
     }
 
     async handleSearch(weatherAPI, app) {
@@ -88,8 +93,9 @@ class UI {
 
     async searchWithCoordinates(lat, lon, cityName) {
         try {
-            const weatherData = await this.weatherAPI.getWeatherData(lat, lon);
-            const processedData = this.weatherAPI.processWeatherData(weatherData, cityName);
+            // We need to pass weatherAPI from the main app
+            const weatherData = await window.weatherAPI.getWeatherData(lat, lon);
+            const processedData = window.weatherAPI.processWeatherData(weatherData, cityName);
             this.addWeatherCard(processedData);
             this.elements.cityInput.value = '';
         } catch (error) {

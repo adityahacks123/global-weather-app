@@ -106,6 +106,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Make app globally accessible for HTML onclick handlers
         window.app = app;
         window.ui = app.ui;
+        window.weatherAPI = app.weatherAPI;
         
         console.log('Weather App loaded successfully');
     } catch (error) {
